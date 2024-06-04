@@ -1,0 +1,45 @@
+﻿.icons {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+i {
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: .3s;
+}
+
+i:hover {
+    color: #a2c1fd;
+    background-color: rgba(162, 193, 253, 0.4);
+    box-shadow: 0 5px .5rem .3rem rgba(162, 193, 253, 0.4);
+    border-radius: 50%;
+}
+
+.nav {
+    background-color: #212121;
+    border: 3px solid #f0f0f0;
+    width: 3rem;
+    height: 99vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.nav > h1 {
+    font-weight: bold;
+    color: #a2c1fd;
+    margin: 0;
+}
+
+.logout {
+    position: absolute;
+    bottom: .5rem;
+    color: #a2c1fd;
+}
