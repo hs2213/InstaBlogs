@@ -37,9 +37,3 @@ i:hover {
     color: #a2c1fd;
     margin: 0;
 }
-
-.logout {
-    position: absolute;
-    bottom: .5rem;
-    color: #a2c1fd;
-}

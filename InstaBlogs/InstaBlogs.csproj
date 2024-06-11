@@ -11,4 +11,12 @@
       <_ContentIncludedByDefault Remove="wwwroot\bootstrap\bootstrap.min.css.map" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\" />
+    </ItemGroup>
+
 </Project>

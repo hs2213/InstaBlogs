@@ -4,6 +4,6 @@ namespace InstaBlogs.Components.Layout;
 
 public partial class Navigation : ComponentBase
 {
-    [Inject] private NavigationManager _navigationManager { get; set; }
-    
+    [Inject] private NavigationManager _navigationManager { get; set; } = default!;
+
 }

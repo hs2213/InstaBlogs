@@ -1,0 +1,18 @@
+﻿i {
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: .3s;
+}
+
+i:hover {
+    color: #a2c1fd;
+    background-color: rgba(162, 193, 253, 0.4);
+    box-shadow: 0 5px .5rem .3rem rgba(162, 193, 253, 0.4);
+    border-radius: 50%;
+}
+
+.logout {
+    position: absolute;
+    bottom: .5rem;
+    color: #a2c1fd;
+}
