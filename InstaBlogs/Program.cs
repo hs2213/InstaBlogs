@@ -1,7 +1,9 @@
 using Auth0.AspNetCore.Authentication;
 using InstaBlogs.Components;
+using InstaBlogs.DBContext;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,9 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.Domain = builder.Configuration.GetSection("Auth0").GetValue<string>("Domain")!;
     options.ClientId = builder.Configuration.GetSection("Auth0").GetValue<string>("ClientId")!;
 });
+
+builder.Services.AddDbContext<InstaBlogsDBContext>(options => 
+    options.UseSqlite("DataSource=InstaBlogs.db"));
 
 var app = builder.Build();
 

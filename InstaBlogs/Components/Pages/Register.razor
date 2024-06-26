@@ -1,0 +1,24 @@
+﻿@page "/register"
+@using InstaBlogs.Entities.Enums
+<PageTitle>Register</PageTitle>
+
+<div>
+    <h1>Finish Signing Up...</h1>
+    <label>
+        @* Email: <input type="email" @bind="_userEmail" disabled/> *@
+    </label>
+
+    <label>
+        @* Name: <input type="email" @bind="_username" disabled/> *@
+    </label>
+
+    <div>
+        <p>Role:</p>
+        <select>
+            @foreach (string role in Enum.GetNames(typeof(Status)))
+            {
+                <option>@role</option>
+            }
+        </select>
+    </div>
+</div>

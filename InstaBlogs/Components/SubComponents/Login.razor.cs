@@ -21,6 +21,7 @@ public partial class Login
         {
             _navigationManager.NavigateTo("Account/Login?redirectUri=feed");
         }
+        
     }
     
     private void LogOut()
