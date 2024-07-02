@@ -17,6 +17,8 @@ public partial class Login
         
         ClaimsPrincipal user = (await AuthState).User;
         
+        var hello = user!.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        
         if(user.Identity?.IsAuthenticated == false)
         {
             _navigationManager.NavigateTo("Account/Login?redirectUri=feed");

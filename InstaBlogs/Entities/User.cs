@@ -5,7 +5,9 @@ namespace InstaBlogs.Entities;
 
 public class User
 {
-    [Key] 
+    [Key]
+    public required string Id { get; set; }
+    
     public required string Email { get; set; }
     
     public Role Role { get; set; }

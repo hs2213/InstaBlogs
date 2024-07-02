@@ -14,20 +14,20 @@ public class BlogRepository : IBlogRepository
         _dbContext = dbContext;
     }
     
-    public async Task Create(Blog blog)
+    public async Task Create(Blog blog, CancellationToken cancellationToken = default)
     {
-        await _dbContext.Blogs.AddAsync(blog);
+        await _dbContext.Blogs.AddAsync(blog, cancellationToken);
         await _dbContext.SaveChangesAsync();
     }
     
-    public ValueTask<Blog?> GetById(Guid id)
+    public ValueTask<Blog?> GetById(Guid id, CancellationToken cancellationToken = default)
     {
-        return _dbContext.Blogs.FindAsync(id);
+        return _dbContext.Blogs.FindAsync(id, cancellationToken);
     }
     
-    public ICollection<Blog> GetByUserEmail(string email)
+    public ICollection<Blog> GetByUserId(string id)
     {
-        return _dbContext.Blogs.Where(blog => blog.UserEmail == email).ToList();
+        return _dbContext.Blogs.Where(blog => blog.UserEmail == id).ToList();
     }
     
     public ICollection<Blog> GetByStatus(Status status)
@@ -40,15 +40,15 @@ public class BlogRepository : IBlogRepository
         return _dbContext.Blogs.OrderBy(blog => Guid.NewGuid()).Take(noOfBlogs).ToList();
     }
     
-    public async ValueTask Update(Blog updatedBlog)
+    public async ValueTask Update(Blog updatedBlog, CancellationToken cancellationToken = default)
     {
         _dbContext.Blogs.Update(updatedBlog);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
     
-    public async ValueTask Delete(Blog blog)
+    public async ValueTask Delete(Blog blog, CancellationToken cancellationToken = default)
     {
         _dbContext.Blogs.Remove(blog);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

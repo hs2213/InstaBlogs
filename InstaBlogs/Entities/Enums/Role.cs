@@ -3,6 +3,6 @@
 public enum Role
 {
     Admin,
-    Writer,
-    Reader
+    Creator,
+    Viewer
 }

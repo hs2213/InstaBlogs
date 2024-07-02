@@ -1,8 +1,8 @@
 ﻿using InstaBlogs.Entities;
 
-namespace InstaBlogs.Repositories.Comments;
+namespace InstaBlogs.Services.Comments;
 
-public interface ICommentRepository
+public interface ICommentService
 {
     /// <summary>
     /// Creates a comment in the database.
@@ -10,7 +10,7 @@ public interface ICommentRepository
     /// <param name="comment"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task Create(Comment comment, CancellationToken cancellationToken = default);
+    Task CreateComment(Comment comment, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets a comment by its ID.
@@ -18,14 +18,14 @@ public interface ICommentRepository
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<Comment?> GetById(Guid id, CancellationToken cancellationToken = default);
-    
+    ValueTask<Comment?> GetCommentById(Guid id, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Gets all the comments for a blog.
     /// </summary>
     /// <param name="blogId"></param>
     /// <returns></returns>
-    ICollection<Comment> GetByBlogId(Guid blogId);
+    ICollection<Comment> GetCommentsByBlogId(Guid blogId);
 
     /// <summary>
     /// Updates an existing comment in the database.
@@ -33,7 +33,7 @@ public interface ICommentRepository
     /// <param name="updatedComment"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask Update(Comment updatedComment, CancellationToken cancellationToken = default);
+    ValueTask UpdateComment(Comment updatedComment, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a comment from the database.
@@ -41,5 +41,5 @@ public interface ICommentRepository
     /// <param name="comment"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask Delete(Comment comment, CancellationToken cancellationToken = default);
+    ValueTask DeleteComment(Comment comment, CancellationToken cancellationToken = default);
 }

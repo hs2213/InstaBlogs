@@ -1,12 +1,12 @@
 ﻿using InstaBlogs.Entities;
 using InstaBlogs.Entities.Enums;
 
-namespace InstaBlogs.Repositories.Blogs;
+namespace InstaBlogs.Services.Blogs;
 
-public interface IBlogRepository
+public interface IBlogService
 {
     /// <summary>
-    /// Adds a blog to the database.
+    /// Creates a blog in the database.
     /// </summary>
     /// <param name="blog"></param>
     /// <param name="cancellationToken"></param>
@@ -14,31 +14,31 @@ public interface IBlogRepository
     Task Create(Blog blog, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets a blog by its ID from the database.
+    /// Gets a blog by its id.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     ValueTask<Blog?> GetById(Guid id, CancellationToken cancellationToken = default);
-
+    
     /// <summary>
-    /// Gets all the blogs a specific user has created.
+    /// Gets all the blogs for a user.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     ICollection<Blog> GetByUserId(string id);
 
     /// <summary>
-    /// Gets all the blogs with a 
+    /// Gets blogs by a specific status.
     /// </summary>
     /// <param name="status"></param>
     /// <returns></returns>
     ICollection<Blog> GetByStatus(Status status);
 
     /// <summary>
-    /// Gets a random number of blogs from the database.
+    /// Gets a specified number of blogs randomly.
     /// </summary>
-    /// <param name="noOfBlogs">Number of blogs to return</param>
+    /// <param name="noOfBlogs"></param>
     /// <returns></returns>
     ICollection<Blog> GetRandomBlogs(int noOfBlogs);
 
@@ -51,7 +51,7 @@ public interface IBlogRepository
     ValueTask Update(Blog updatedBlog, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Deletes a blog from the database.
+    /// Deletes an existing blog in the database.
     /// </summary>
     /// <param name="blog"></param>
     /// <param name="cancellationToken"></param>
