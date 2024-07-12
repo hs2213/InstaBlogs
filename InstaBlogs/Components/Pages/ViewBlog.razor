@@ -1,0 +1,13 @@
+﻿@page "/view/{Id:guid}"
+
+<PageTitle>Blog</PageTitle>
+
+<div class="blog">
+    <h1 class="blog-title">@_displayedBlog?.Title</h1>
+    <h2 class="blog-created-time">@_displayedBlog?.Created.ToLocalTime().ToString("dd/MM/yyyy")</h2>
+    <h3 class="blog-email">@_displayedBlog?.UserEmail</h3>
+
+    <div class="blog-content">
+        @((MarkupString)_htmlContent)
+    </div>
+</div>

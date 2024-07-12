@@ -5,14 +5,12 @@ namespace InstaBlogs.Entities;
 
 public class User
 {
-    [Key]
-    public required string Id { get; set; }
-    
-    public required string Email { get; set; }
+    [Key] 
+    public string Id { get; set; } = string.Empty;
+
+    public string Email { get; set; } = string.Empty;
     
     public Role Role { get; set; }
-    
-    public required string Name { get; set; }
-    
-    public string ProfilePictureLink { get; set; } = string.Empty;
+
+    public string Name { get; set; } = string.Empty;
 }

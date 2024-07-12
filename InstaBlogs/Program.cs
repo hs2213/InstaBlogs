@@ -1,4 +1,5 @@
 using Auth0.AspNetCore.Authentication;
+using Azure.Storage.Blobs;
 using InstaBlogs.Components;
 using InstaBlogs.DBContext;
 using InstaBlogs.Extensions;
@@ -25,17 +26,8 @@ builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddValidators();
 
-builder.Services.AddHttpClient("Auth0ManagementAPI", client =>
-{
-    client.BaseAddress =
-        new Uri($"https://{builder.Configuration.GetSection("Auth0").GetValue<string>("Domain")}/api/v2/");
-});
-
-builder.Services.AddHttpClient("Auth0Token", client =>
-{
-    client.BaseAddress = 
-        new Uri($"https://{builder.Configuration.GetSection("Auth0").GetValue<string>("Domain")}/oath/token");
-});
+builder.Services
+    .AddSingleton(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureConString")));
 
 var app = builder.Build();
 

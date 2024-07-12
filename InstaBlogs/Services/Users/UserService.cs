@@ -2,8 +2,8 @@
 using FluentValidation.Results;
 using InstaBlogs.Entities;
 using InstaBlogs.Repositories.Users;
-using InstaBlogs.Services.Auth0;
 using InstaBlogs.Services.Notifications;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace InstaBlogs.Services.Users;
 
@@ -11,24 +11,29 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IValidator<User> _userValidator;
-    private readonly IAuth0Service _authService;
     private readonly INotificationService _notificationService;
+    private readonly ProtectedSessionStorage _protectedSessionStorage;
     
     public UserService(
         IUserRepository userRepository,
         IValidator<User> userValidator,
-        IAuth0Service authService,
-        INotificationService notificationService)
+        INotificationService notificationService, 
+        ProtectedSessionStorage protectedSessionStorage)
     {
         _userRepository = userRepository;
         _userValidator = userValidator;
-        _authService = authService;
         _notificationService = notificationService;
+        _protectedSessionStorage = protectedSessionStorage;
     }
 
     public async Task<bool> CheckIfExists(string email, CancellationToken cancellationToken = default)
     {
         User? user = await _userRepository.GetById(email, cancellationToken);
+
+        if (user != null)
+        {
+            await _protectedSessionStorage.SetAsync(Constants.UserKey, user);
+        }
         
         return user != null;
     }
@@ -44,13 +49,14 @@ public class UserService : IUserService
 
         if (validationResult?.IsValid == false)
         {
+            await _notificationService.ShowNotification("Invalid Data Provided");
             return;
         }
         
         await _userRepository.Create(user, cancellationToken);
-
-        await _authService.AssignRole(user);
-
+        
+        await _protectedSessionStorage.SetAsync(Constants.UserKey, user);
+        
         await _notificationService.ShowNotification("Created account successfully");
     }
     

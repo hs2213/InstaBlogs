@@ -6,11 +6,11 @@ public class Blog
 {
     public Guid Id { get; set; }
     
-    public required string Title { get; set; }
-    
-    public required string Content { get; set; }
-    
-    public required string UserEmail { get; set; }
+    public string Title { get; set; } = string.Empty;
+
+    public string Content { get; set; } = string.Empty;
+
+    public string UserEmail { get; set; } = string.Empty;
     
     public DateTimeOffset Created { get; set; }
     

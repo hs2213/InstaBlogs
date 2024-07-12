@@ -6,6 +6,7 @@ using InstaBlogs.Repositories.Comments;
 using InstaBlogs.Repositories.Users;
 using InstaBlogs.Services.Blogs;
 using InstaBlogs.Services.Comments;
+using InstaBlogs.Services.Files;
 using InstaBlogs.Services.Notifications;
 using InstaBlogs.Services.Users;
 
@@ -27,7 +28,8 @@ public static class ServiceExtensions
             .AddScoped<IUserService, UserService>()
             .AddScoped<IBlogService, BlogService>()
             .AddScoped<ICommentService, CommentService>()
-            .AddSingleton<INotificationService, NotificationService>();
+            .AddSingleton<INotificationService, NotificationService>()
+            .AddScoped<IFileService, FileService>();
     }
 
     public static void AddValidators(this IServiceCollection services)

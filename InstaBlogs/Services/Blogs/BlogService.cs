@@ -5,6 +5,7 @@ using InstaBlogs.Entities.Enums;
 using InstaBlogs.Repositories.Blogs;
 using InstaBlogs.Services.Comments;
 using InstaBlogs.Services.Notifications;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace InstaBlogs.Services.Blogs;
 
@@ -13,23 +14,33 @@ public class BlogService : IBlogService
     private readonly IBlogRepository _blogRepository;
     private readonly INotificationService _notificationService;
     private readonly IValidator<Blog> _blogValidator;
+    private readonly ProtectedSessionStorage _sessionStorage;
     
     public BlogService(
         IBlogRepository blogRepository, 
         INotificationService notificationService,
-        IValidator<Blog> blogValidator)
+        IValidator<Blog> blogValidator, 
+        ProtectedSessionStorage sessionStorage)
     {
         _blogRepository = blogRepository;
         _notificationService = notificationService;
         _blogValidator = blogValidator;
+        _sessionStorage = sessionStorage;
     }
 
     public async Task Create(Blog blog, CancellationToken cancellationToken = default)
     {
+        blog.Id = Guid.NewGuid();
+        blog.Created = DateTimeOffset.Now;
+
+        ProtectedBrowserStorageResult<User> userInfo = await _sessionStorage.GetAsync<User>(Constants.UserKey);
+        blog.UserEmail = userInfo.Value?.Email ?? string.Empty;
+        
         ValidationResult validationResult = await _blogValidator.ValidateAsync(blog, cancellationToken);
         
         if (validationResult.IsValid == false)
         {
+            await _notificationService.ShowNotification("Please ensure all fields are filled correctly");
             return;
         }
         

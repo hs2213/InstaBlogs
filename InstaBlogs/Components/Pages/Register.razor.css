@@ -1,0 +1,23 @@
+﻿.role {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    height: 1rem;
+    align-items: center;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.role > select {
+    height: fit-content;
+}
+
+button[type="submit"] {
+    padding: .2rem 0;
+    font-size: .95rem;
+    width: 5rem;
+}

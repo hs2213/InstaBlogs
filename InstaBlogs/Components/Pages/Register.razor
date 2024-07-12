@@ -2,23 +2,25 @@
 @using InstaBlogs.Entities.Enums
 <PageTitle>Register</PageTitle>
 
-<div>
+<form class="register-form" @onsubmit="RegisterUser">
     <h1>Finish Signing Up...</h1>
     <label>
-        @* Email: <input type="email" @bind="_userEmail" disabled/> *@
+        Email: <input type="email" @bind="_userToRegister.Email"/>
     </label>
-
+    
     <label>
-        @* Name: <input type="email" @bind="_username" disabled/> *@
+        Name: <input type="text" @bind="_userToRegister.Name"/>
     </label>
 
-    <div>
+    <div class="role">
         <p>Role:</p>
-        <select>
-            @foreach (string role in Enum.GetNames(typeof(Status)))
+        <select @onchange="RefreshRole">
+            @foreach (string role in Enum.GetNames(typeof(Role)))
             {
                 <option>@role</option>
             }
         </select>
     </div>
-</div>
+    
+    <button type="submit">Submit</button>
+</form>

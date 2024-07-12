@@ -6,9 +6,12 @@
         <i @onclick="@(() => _navigationManager.NavigateTo("feed"))" class="bi bi-house"></i>
         <i class="bi bi-search"></i>
         <i class="bi bi-check-all"></i>
-        <i class="bi bi-plus-circle"></i>
+        <i @onclick="@(() => _navigationManager.NavigateTo("create"))" class="bi bi-plus-circle"></i>
         <i class="bi bi-person"></i>
     </div>
     
-    <Login/>
+    @if (_navigationManager.Uri.Contains("register") == false)
+    { 
+        <Login/>
+    }
 </div>
