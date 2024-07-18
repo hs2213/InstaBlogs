@@ -7,26 +7,36 @@ namespace InstaBlogs.Components.SubComponents;
 
 public partial class RoleView
 {
-    [Parameter]
-    public Role RoleToDisplay { get; set; }
+    [Parameter] 
+    public IEnumerable<Role> RoleToDisplay { get; set; } = [];
     
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment? WrongRoleContent { get; set; }
+    
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
     [Inject] 
     private ProtectedSessionStorage ProtectedSessionStorage { get; set; } = default!;
 
     private bool _isContentRestricted = false;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (firstRender == false)
+        {
+            return;
+        }
+        
         ProtectedBrowserStorageResult<User> activeUser = await ProtectedSessionStorage.GetAsync<User>(Constants.UserKey);
 
         if (activeUser.Success == false)
         {
             return;
         }
+
+        _isContentRestricted = RoleToDisplay.Contains<Role>(activeUser.Value!.Role) == false;
         
-        _isContentRestricted = activeUser.Value!.Role != RoleToDisplay;
+        StateHasChanged();
     }
 }

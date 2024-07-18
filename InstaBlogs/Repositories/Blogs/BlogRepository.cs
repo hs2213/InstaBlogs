@@ -2,6 +2,7 @@
 using InstaBlogs.DBContext;
 using InstaBlogs.Entities;
 using InstaBlogs.Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace InstaBlogs.Repositories.Blogs;
 
@@ -20,9 +21,14 @@ public class BlogRepository : IBlogRepository
         await _dbContext.SaveChangesAsync();
     }
     
-    public ValueTask<Blog?> GetById(Guid id, CancellationToken cancellationToken = default)
+    public IEnumerable<Blog> GetByTitle(string title, CancellationToken cancellationToken = default)
     {
-        return _dbContext.Blogs.FindAsync(id, cancellationToken);
+        return _dbContext.Blogs.Where(blog => blog.Title.Contains(title)).ToList();
+    }
+    
+    public async Task<Blog?> GetById(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Blogs.FindAsync(id, cancellationToken);
     }
     
     public ICollection<Blog> GetByUserId(string id)
@@ -35,18 +41,23 @@ public class BlogRepository : IBlogRepository
         return _dbContext.Blogs.Where(blog => blog.Status == status).ToList();
     }
     
-    public ICollection<Blog> GetRandomBlogs(int noOfBlogs)
+    public ICollection<Blog> GetRandomAuthorisedBlogs(int noOfBlogs)
     {
-        return _dbContext.Blogs.OrderBy(blog => Guid.NewGuid()).Take(noOfBlogs).ToList();
+        return _dbContext.Blogs
+            .AsEnumerable()
+            .Where(blog => blog.Status == Status.Approved)
+            .OrderBy(t => Guid.NewGuid())
+            .Take(noOfBlogs)
+            .ToList();
     }
     
-    public async ValueTask Update(Blog updatedBlog, CancellationToken cancellationToken = default)
+    public async Task Update(Blog updatedBlog, CancellationToken cancellationToken = default)
     {
         _dbContext.Blogs.Update(updatedBlog);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
     
-    public async ValueTask Delete(Blog blog, CancellationToken cancellationToken = default)
+    public async Task Delete(Blog blog, CancellationToken cancellationToken = default)
     {
         _dbContext.Blogs.Remove(blog);
         await _dbContext.SaveChangesAsync(cancellationToken);

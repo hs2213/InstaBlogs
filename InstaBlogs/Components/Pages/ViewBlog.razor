@@ -1,6 +1,14 @@
 ﻿@page "/view/{Id:guid}"
+@using InstaBlogs.Entities
+
+@attribute [Authorize]
 
 <PageTitle>Blog</PageTitle>
+
+@if (_displayedBlog == null)
+{
+    <p>No Blog Found with associated ID</p>
+}
 
 <div class="blog">
     <h1 class="blog-title">@_displayedBlog?.Title</h1>
@@ -10,4 +18,61 @@
     <div class="blog-content">
         @((MarkupString)_htmlContent)
     </div>
+
+    <RoleView RoleToDisplay="[Role.Creator, Role.Viewer]">
+        <ChildContent>
+            <div class="comments">
+                @if (_displayedBlog?.CommentsEnabled == false)
+                { 
+                    <p>Comments disabled for this blog</p>
+                }
+                else
+                {
+                <textarea @bind="_newComment.Content" placeholder="Enter Comment Here"></textarea>
+                <button @onclick="AddComment">Add Comment</button>
+
+                @foreach (Comment comment in _blogComments)
+                {
+                <div class="comment">
+                    <p class="user">@comment.UserEmail</p>
+                    <p class="content">@comment.Content</p>
+                </div>
+                }
+                }
+            </div>
+        </ChildContent>
+        
+        <WrongRoleContent></WrongRoleContent>
+    </RoleView>
+
+    @* <RoleView RoleToDisplay="[Role.Creator]"> *@
+    @*     <ChildContent> *@
+            @if (_currentUser.Email.Equals(_displayedBlog?.UserEmail, StringComparison.OrdinalIgnoreCase))
+            {
+                <div class="approve-reject">
+                    <button @onclick="DeleteBlog" style="width: 9rem">Delete Blog</button>
+                    <button @onclick="UpdateBlog" style="width: 9rem">Update Blog</button>
+                </div>
+            }
+    @*     </ChildContent> *@
+    @*      *@
+    @*     <WrongRoleContent></WrongRoleContent> *@
+    @* </RoleView> *@
+
+    @* <RoleView RoleToDisplay="[Role.Admin]"> *@
+    @*     <ChildContent> *@
+    @*         <div class="approval-area"> *@
+    @*             <div class="current-status" style="@_style"> *@
+    @*                 <p>Current Status: @_displayedBlog?.Status.ToString()</p> *@
+    @*             </div> *@
+    @* *@
+    @*             <div class="approve-reject"> *@
+    @*                 <button @onclick="() => UpdateBlogStatus(Status.Approved)">Approve</button> *@
+    @*                 <button @onclick="() => UpdateBlogStatus(Status.Rejected)">Reject</button> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </ChildContent> *@
+    @*      *@
+    @*     <WrongRoleContent></WrongRoleContent> *@
+    @* </RoleView> *@
 </div>

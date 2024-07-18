@@ -31,7 +31,7 @@ public partial class Login
         
         if(user.Identity?.IsAuthenticated == false)
         {
-            NavigationManager.NavigateTo("Account/Login?redirectUri=feed", true);
+            NavigationManager.NavigateTo("Account/Login?redirectUri=", true);
             return;
         }
         

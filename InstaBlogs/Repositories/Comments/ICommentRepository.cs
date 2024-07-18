@@ -18,7 +18,7 @@ public interface ICommentRepository
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<Comment?> GetById(Guid id, CancellationToken cancellationToken = default);
+    Task<Comment?> GetById(Guid id, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Gets all the comments for a blog.
@@ -33,7 +33,7 @@ public interface ICommentRepository
     /// <param name="updatedComment"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask Update(Comment updatedComment, CancellationToken cancellationToken = default);
+    Task Update(Comment updatedComment, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a comment from the database.
@@ -41,5 +41,5 @@ public interface ICommentRepository
     /// <param name="comment"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask Delete(Comment comment, CancellationToken cancellationToken = default);
+    Task Delete(Comment comment, CancellationToken cancellationToken = default);
 }

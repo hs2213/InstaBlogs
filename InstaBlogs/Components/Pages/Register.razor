@@ -1,6 +1,7 @@
 ﻿@page "/register"
-@using InstaBlogs.Entities.Enums
 <PageTitle>Register</PageTitle>
+
+@attribute [Authorize]
 
 <form class="register-form" @onsubmit="RegisterUser">
     <h1>Finish Signing Up...</h1>

@@ -1,0 +1,25 @@
+.arrows {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+    padding: 1rem;
+}
+
+.arrows > i {
+    font-size: 4rem;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.arrows > i:hover {
+    color: #a2c1fd;
+}
+
+.reel-with-arrows {
+    display: flex;
+    gap: 1rem;
+    margin: auto;
+    width: fit-content;
+}

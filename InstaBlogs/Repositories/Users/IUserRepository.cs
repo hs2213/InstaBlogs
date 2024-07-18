@@ -18,7 +18,7 @@ public interface IUserRepository
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<User?> GetById(string id, CancellationToken cancellationToken = default);
+    Task<User?> GetById(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates an existing user in the database.
@@ -26,5 +26,5 @@ public interface IUserRepository
     /// <param name="updatedUser"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask Update(User updatedUser, CancellationToken cancellationToken = default);
+    Task Update(User updatedUser, CancellationToken cancellationToken = default);
 }

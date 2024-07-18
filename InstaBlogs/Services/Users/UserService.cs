@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using InstaBlogs.Entities;
 using InstaBlogs.Repositories.Users;
 using InstaBlogs.Services.Notifications;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace InstaBlogs.Services.Users;
@@ -13,17 +14,20 @@ public class UserService : IUserService
     private readonly IValidator<User> _userValidator;
     private readonly INotificationService _notificationService;
     private readonly ProtectedSessionStorage _protectedSessionStorage;
+    private readonly NavigationManager _navigationManager;
     
     public UserService(
         IUserRepository userRepository,
         IValidator<User> userValidator,
         INotificationService notificationService, 
-        ProtectedSessionStorage protectedSessionStorage)
+        ProtectedSessionStorage protectedSessionStorage,
+        NavigationManager navigationManager)
     {
         _userRepository = userRepository;
         _userValidator = userValidator;
         _notificationService = notificationService;
         _protectedSessionStorage = protectedSessionStorage;
+        _navigationManager = navigationManager;
     }
 
     public async Task<bool> CheckIfExists(string email, CancellationToken cancellationToken = default)
@@ -38,7 +42,7 @@ public class UserService : IUserService
         return user != null;
     }
     
-    public ValueTask<User?> GetByEmail(string email, CancellationToken cancellationToken = default)
+    public Task<User?> GetByEmail(string email, CancellationToken cancellationToken = default)
     {
         return _userRepository.GetById(email, cancellationToken);
     }
@@ -58,9 +62,11 @@ public class UserService : IUserService
         await _protectedSessionStorage.SetAsync(Constants.UserKey, user);
         
         await _notificationService.ShowNotification("Created account successfully");
+        
+        _navigationManager.NavigateTo("", true);
     }
     
-    public async ValueTask Update(User updatedUser, CancellationToken cancellationToken = default)
+    public async Task Update(User updatedUser, CancellationToken cancellationToken = default)
     {
         ValidationResult validationResult = await _userValidator.ValidateAsync(updatedUser, cancellationToken);
 

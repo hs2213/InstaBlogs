@@ -19,9 +19,9 @@ public class CommentRepository : ICommentRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
     
-    public ValueTask<Comment?> GetById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Comment?> GetById(Guid id, CancellationToken cancellationToken = default)
     {
-        return _dbContext.Comments.FindAsync(id, cancellationToken);
+        return await _dbContext.Comments.FindAsync(id, cancellationToken);
     }
     
     public ICollection<Comment> GetByBlogId(Guid blogId)
@@ -29,13 +29,13 @@ public class CommentRepository : ICommentRepository
         return _dbContext.Comments.Where(comment => comment.BlogId == blogId).ToList();
     }
     
-    public async ValueTask Update(Comment updatedComment, CancellationToken cancellationToken = default)
+    public async Task Update(Comment updatedComment, CancellationToken cancellationToken = default)
     {
         _dbContext.Comments.Update(updatedComment);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
     
-    public async ValueTask Delete(Comment comment, CancellationToken cancellationToken = default)
+    public async Task Delete(Comment comment, CancellationToken cancellationToken = default)
     {
         _dbContext.Comments.Remove(comment);
         await _dbContext.SaveChangesAsync(cancellationToken);

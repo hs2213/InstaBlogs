@@ -14,12 +14,20 @@ public interface IBlogService
     Task Create(Blog blog, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets blogs by their title.
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    IEnumerable<Blog> GetByTitle(string title, CancellationToken cancellationToken = default);
+    
+    /// <summary>
     /// Gets a blog by its id.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<Blog?> GetById(Guid id, CancellationToken cancellationToken = default);
+    Task<Blog?> GetById(Guid id, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Gets all the blogs for a user.
@@ -48,7 +56,7 @@ public interface IBlogService
     /// <param name="updatedBlog"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask Update(Blog updatedBlog, CancellationToken cancellationToken = default);
+    Task Update(Blog updatedBlog, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes an existing blog in the database.
@@ -56,5 +64,5 @@ public interface IBlogService
     /// <param name="blog"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask Delete(Blog blog, CancellationToken cancellationToken = default);
+    Task Delete(Blog blog, CancellationToken cancellationToken = default);
 }

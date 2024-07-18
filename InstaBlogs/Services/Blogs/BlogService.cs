@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Collections.ObjectModel;
+using FluentValidation;
 using FluentValidation.Results;
 using InstaBlogs.Entities;
 using InstaBlogs.Entities.Enums;
@@ -49,7 +50,12 @@ public class BlogService : IBlogService
         await _notificationService.ShowNotification("Blog Successfully Created");
     }
     
-    public ValueTask<Blog?> GetById(Guid id, CancellationToken cancellationToken = default)
+    public IEnumerable<Blog> GetByTitle(string title, CancellationToken cancellationToken = default)
+    {
+        return string.IsNullOrWhiteSpace(title) ? [] : _blogRepository.GetByTitle(title, cancellationToken);
+    }
+    
+    public Task<Blog?> GetById(Guid id, CancellationToken cancellationToken = default)
     {
         return _blogRepository.GetById(id, cancellationToken);
     }
@@ -66,15 +72,16 @@ public class BlogService : IBlogService
     
     public ICollection<Blog> GetRandomBlogs(int noOfBlogs)
     {
-        return _blogRepository.GetRandomBlogs(noOfBlogs);
+        return _blogRepository.GetRandomAuthorisedBlogs(noOfBlogs);
     }
     
-    public async ValueTask Update(Blog updatedBlog, CancellationToken cancellationToken = default)
+    public async Task Update(Blog updatedBlog, CancellationToken cancellationToken = default)
     {
         ValidationResult validationResult = await _blogValidator.ValidateAsync(updatedBlog, cancellationToken);
         
         if (validationResult.IsValid == false)
         {
+            await _notificationService.ShowNotification("Please ensure all fields are filled correctly");
             return;
         }
         
@@ -83,7 +90,7 @@ public class BlogService : IBlogService
         await _notificationService.ShowNotification("Blog Successfully Updated");
     }
     
-    public async ValueTask Delete(Blog blog, CancellationToken cancellationToken = default)
+    public async Task Delete(Blog blog, CancellationToken cancellationToken = default)
     {
         await _blogRepository.Delete(blog, cancellationToken);
         

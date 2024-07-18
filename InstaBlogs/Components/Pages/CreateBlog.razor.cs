@@ -11,6 +11,9 @@ namespace InstaBlogs.Components.Pages;
 
 public partial class CreateBlog : IAsyncDisposable
 {
+    [Parameter]
+    public Guid Id { get; set; }
+    
     private Blog _blogBeingEdited = new Blog();
 
     private string _typedContent = string.Empty;
@@ -31,6 +34,28 @@ public partial class CreateBlog : IAsyncDisposable
     
     [Inject]
     private IBlogService BlogService { get; set; } = default!;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id == Guid.Empty)
+        {
+            return;
+        }
+
+        var retrievedBlog = await BlogService.GetById(Id);
+
+        if (retrievedBlog == null)
+        {
+            return;
+        }
+
+        _blogBeingEdited = retrievedBlog;
+
+        _typedContent = _blogBeingEdited.Content;
+        UpdateContent();
+        
+        StateHasChanged();
+    }
 
     private void UpdateContent()
     {
@@ -84,6 +109,13 @@ public partial class CreateBlog : IAsyncDisposable
         
         StateHasChanged();
     }
+
+    private void AddLink()
+    {
+        _typedContent += $"[Enter Title Here](Enter URL Here)";
+        
+        StateHasChanged();
+    }
     
     private async Task LoadModule()
     {
@@ -100,7 +132,12 @@ public partial class CreateBlog : IAsyncDisposable
     {
         _blogBeingEdited.Content = _typedContent;
 
-        await BlogService.Create(_blogBeingEdited);
+        if (Id == Guid.Empty)
+        {
+            await BlogService.Create(_blogBeingEdited);
+        }
+
+        await BlogService.Update(_blogBeingEdited);
     }
 
     public async ValueTask DisposeAsync()

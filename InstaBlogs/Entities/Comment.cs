@@ -6,7 +6,7 @@ public class Comment
     
     public Guid BlogId { get; set; }
     
-    public required string UserEmail { get; set; }
-    
-    public required string Content { get; set; }
+    public string UserEmail { get; set; } = string.Empty;
+
+    public string Content { get; set; } = string.Empty;
 }

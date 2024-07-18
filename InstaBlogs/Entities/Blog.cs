@@ -13,6 +13,8 @@ public class Blog
     public string UserEmail { get; set; } = string.Empty;
     
     public DateTimeOffset Created { get; set; }
-    
-    public Status Status { get; set; }
+
+    public Status Status { get; set; } = Status.Pending;
+
+    public bool CommentsEnabled { get; set; } = true;
 }

@@ -13,5 +13,42 @@ h1, h2, h3, p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: auto;
     gap: .5rem;
+    max-width: 65vw;
+}
+
+.approval-area {
+    width: 100%;
+    text-align: center;
+}
+
+.current-status {
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.approve-reject {
+    margin-top: .5rem;
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+}
+
+.approve-reject > button {
+    width: 7rem;
+    font-size: 1.2rem;
+    border: 2px solid #f0f0f0;
+    background: transparent;
+    color: #f0f0f0;
+    margin-bottom: 1rem;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+    font-weight: bold;
+}
+
+.approve-reject > button:hover {
+    background: #f0f0f0;
+    color: #000;
 }

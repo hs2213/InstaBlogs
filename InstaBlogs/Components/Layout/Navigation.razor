@@ -3,9 +3,9 @@
     <h1>B</h1>
     
     <div class="icons">
-        <i @onclick="@(() => _navigationManager.NavigateTo("feed"))" class="bi bi-house"></i>
+        <i @onclick="@(() => _navigationManager.NavigateTo("", true))" class="bi bi-house"></i>
         <i class="bi bi-search"></i>
-        <i class="bi bi-check-all"></i>
+        <i class="bi bi-check-all" @onclick="@(() => _navigationManager.NavigateTo("approve-reject", true))"></i>
         <i @onclick="@(() => _navigationManager.NavigateTo("create"))" class="bi bi-plus-circle"></i>
         <i class="bi bi-person"></i>
     </div>

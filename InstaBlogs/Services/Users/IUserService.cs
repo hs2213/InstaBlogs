@@ -18,7 +18,7 @@ public interface IUserService
     /// <param name="email"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<User?> GetByEmail(string email, CancellationToken cancellationToken = default);
+    Task<User?> GetByEmail(string email, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a user and saves their role in auth0.
@@ -34,5 +34,5 @@ public interface IUserService
     /// <param name="updatedUser"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask Update(User updatedUser, CancellationToken cancellationToken = default);
+    Task Update(User updatedUser, CancellationToken cancellationToken = default);
 }

@@ -74,4 +74,14 @@ article::-webkit-scrollbar-thumb:hover {
 .converted-content video, .blog-content video {
     max-width: 100%;
     max-height: 100%;
+} 
+
+.blurred-content {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    filter: blur(7px);
 }

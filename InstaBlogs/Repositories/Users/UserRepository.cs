@@ -18,12 +18,12 @@ public class UserRepository : IUserRepository, IAsyncDisposable
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public ValueTask<User?> GetById(string id, CancellationToken cancellationToken = default)
+    public async Task<User?> GetById(string id, CancellationToken cancellationToken = default)
     {
-        return _dbContext.Users.FindAsync(id, cancellationToken);
+        return await _dbContext.Users.FindAsync(id, cancellationToken);
     }
 
-    public async ValueTask Update(User updatedUser, CancellationToken cancellationToken = default)
+    public async Task Update(User updatedUser, CancellationToken cancellationToken = default)
     {
         _dbContext.Users.Update(updatedUser);
         await _dbContext.SaveChangesAsync(cancellationToken);
