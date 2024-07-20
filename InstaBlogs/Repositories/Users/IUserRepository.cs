@@ -18,7 +18,7 @@ public interface IUserRepository
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<User?> GetById(string id, CancellationToken cancellationToken = default);
+    User? GetById(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates an existing user in the database.

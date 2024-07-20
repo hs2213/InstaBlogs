@@ -32,7 +32,7 @@ public class CommentService : ICommentService
         
         ProtectedBrowserStorageResult<User> user = await _sessionStorage.GetAsync<User>(Constants.UserKey);
         
-        comment.UserEmail = user.Value?.Email ?? string.Empty;
+        comment.UserId = user.Value?.Id ?? string.Empty;
         
         ValidationResult validationResult = await _commentValidator.ValidateAsync(comment, cancellationToken);
 

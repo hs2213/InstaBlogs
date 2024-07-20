@@ -15,7 +15,7 @@ public class BlogValidator : AbstractValidator<Blog>
         RuleFor(blog => blog.Content)
             .NotEmpty().WithMessage("Content is required");
         
-        RuleFor(blog => blog.UserEmail)
+        RuleFor(blog => blog.UserId)
             .NotEmpty().WithMessage("User Email is required");
         
         RuleFor(blog => blog.Created)

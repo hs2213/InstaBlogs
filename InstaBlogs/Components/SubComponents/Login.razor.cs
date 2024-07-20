@@ -1,7 +1,9 @@
 ﻿using System.Security.Claims;
+using InstaBlogs.Entities;
 using InstaBlogs.Services.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace InstaBlogs.Components.SubComponents;
 
@@ -13,6 +15,9 @@ public partial class Login
     [Inject]
     private IUserService UserService { get; set; } = default!;
 
+    [Inject]
+    private ProtectedSessionStorage ProtectedSessionStorage { get; set; } = default!;
+    
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -27,6 +32,13 @@ public partial class Login
 
     private async Task CheckUserAuthenticatedAndInDb()
     {
+        var result = await ProtectedSessionStorage.GetAsync<User>(Constants.UserKey);
+
+        if (result.Success)
+        {
+            return;
+        }
+        
         ClaimsPrincipal user = (await AuthState).User;
         
         if(user.Identity?.IsAuthenticated == false)
@@ -45,8 +57,10 @@ public partial class Login
         }
     }
 
-    private void LogOut()
+    private async Task LogOut()
     {
+        await ProtectedSessionStorage.DeleteAsync(Constants.UserKey);
+        
         NavigationManager.NavigateTo("Account/Logout");
     }
 }

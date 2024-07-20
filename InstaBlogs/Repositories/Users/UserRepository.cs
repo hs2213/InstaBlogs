@@ -18,9 +18,9 @@ public class UserRepository : IUserRepository, IAsyncDisposable
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<User?> GetById(string id, CancellationToken cancellationToken = default)
+    public User? GetById(string id, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Users.FindAsync(id, cancellationToken);
+        return _dbContext.Users.SingleOrDefault(user => user.Id == id);
     }
 
     public async Task Update(User updatedUser, CancellationToken cancellationToken = default)

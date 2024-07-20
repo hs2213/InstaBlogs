@@ -3,14 +3,19 @@
     <h1>B</h1>
     
     <div class="icons">
-        <i @onclick="@(() => _navigationManager.NavigateTo("", true))" class="bi bi-house"></i>
+        <i @onclick="@(() => NavigationManager.NavigateTo("", true))" class="bi bi-house"></i>
         <i class="bi bi-search"></i>
-        <i class="bi bi-check-all" @onclick="@(() => _navigationManager.NavigateTo("approve-reject", true))"></i>
-        <i @onclick="@(() => _navigationManager.NavigateTo("create"))" class="bi bi-plus-circle"></i>
-        <i class="bi bi-person"></i>
+        <RoleView RoleToDisplay="[Role.Admin]">
+            <ChildContent>
+                <i class="bi bi-check-all" @onclick="@(() => NavigationManager.NavigateTo("approve-reject", true))"></i>
+            </ChildContent>
+            <WrongRoleContent></WrongRoleContent>
+        </RoleView>
+        <i @onclick="@(() => NavigationManager.NavigateTo("create"))" class="bi bi-plus-circle"></i>
+        <i class="bi bi-person" @onclick="@(() => NavigationManager.NavigateTo("profile"))"></i>
     </div>
     
-    @if (_navigationManager.Uri.Contains("register") == false)
+    @if (NavigationManager.Uri.Contains("register") == false)
     { 
         <Login/>
     }

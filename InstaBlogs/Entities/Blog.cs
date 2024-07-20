@@ -10,7 +10,7 @@ public class Blog
 
     public string Content { get; set; } = string.Empty;
 
-    public string UserEmail { get; set; } = string.Empty;
+    public string UserId { get; set; } = string.Empty;
     
     public DateTimeOffset Created { get; set; }
 

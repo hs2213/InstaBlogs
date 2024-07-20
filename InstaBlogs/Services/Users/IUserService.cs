@@ -15,10 +15,10 @@ public interface IUserService
     /// <summary>
     /// Gets a user by their email
     /// </summary>
-    /// <param name="email"></param>
+    /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<User?> GetByEmail(string email, CancellationToken cancellationToken = default);
+    User? GetById(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a user and saves their role in auth0.

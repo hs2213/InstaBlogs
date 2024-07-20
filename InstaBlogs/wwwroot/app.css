@@ -64,6 +64,7 @@ article::-webkit-scrollbar-thumb:hover {
     flex-direction: column;
     gap: .5rem;
     align-items: center;
+    text-align: center;
 }
 
 .converted-content img, .blog-content img {

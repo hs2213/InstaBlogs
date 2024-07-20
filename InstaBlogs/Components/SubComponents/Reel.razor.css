@@ -1,7 +1,7 @@
 ﻿.reel {
     height: 97vh;
-    border: 3px solid #a2c1fd;
     width: 34vw;
+    border: 3px solid #a2c1fd;
     display: flex;
     flex-direction: column;
     margin: auto;

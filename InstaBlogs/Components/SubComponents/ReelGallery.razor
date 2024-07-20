@@ -1,3 +1,6 @@
-﻿<div>
-    
+﻿<div class="gallery">
+    @foreach (Blog blog in Blogs)
+    {
+        <Reel OnClicked="@(() => NavigateToBlog(blog.Id))" BlogToShow="@blog"/>
+    }
 </div>

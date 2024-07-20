@@ -1,0 +1,22 @@
+﻿@page "/profile"
+
+@attribute [Authorize]
+
+<div class="container">
+    <h1>@_displayedUser.Name</h1>
+    <h1>@_displayedUser.Role.ToString()</h1>
+    
+    <RoleView RoleToDisplay="[Role.Admin, Role.Creator]">
+        <ChildContent>
+            <ReelGallery Blogs="_blogs"/>
+            
+            @if (_blogs.Any() == false)
+            {
+                <p>Your created blogs will be shown here</p>
+            }
+        </ChildContent>
+        <WrongRoleContent>
+            <p>Become a creator to create Blogs.</p>
+        </WrongRoleContent>
+    </RoleView>
+</div>

@@ -33,7 +33,7 @@ public class BlogRepository : IBlogRepository
     
     public ICollection<Blog> GetByUserId(string id)
     {
-        return _dbContext.Blogs.Where(blog => blog.UserEmail == id).ToList();
+        return _dbContext.Blogs.Where(blog => blog.UserId == id).ToList();
     }
     
     public ICollection<Blog> GetByStatus(Status status)

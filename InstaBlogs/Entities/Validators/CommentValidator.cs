@@ -12,7 +12,7 @@ public class CommentValidator : AbstractValidator<Comment>
         RuleFor(comment => comment.BlogId)
             .NotEqual(Guid.Empty).NotEmpty().WithMessage("Blog Id is required");
         
-        RuleFor(comment => comment.UserEmail)
+        RuleFor(comment => comment.UserId)
             .NotEmpty().WithMessage("User Email is required");
         
         RuleFor(comment => comment.Content)

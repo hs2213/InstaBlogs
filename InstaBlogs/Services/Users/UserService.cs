@@ -30,9 +30,9 @@ public class UserService : IUserService
         _navigationManager = navigationManager;
     }
 
-    public async Task<bool> CheckIfExists(string email, CancellationToken cancellationToken = default)
+    public async Task<bool> CheckIfExists(string id, CancellationToken cancellationToken = default)
     {
-        User? user = await _userRepository.GetById(email, cancellationToken);
+        User? user = _userRepository.GetById(id, cancellationToken);
 
         if (user != null)
         {
@@ -42,9 +42,9 @@ public class UserService : IUserService
         return user != null;
     }
     
-    public Task<User?> GetByEmail(string email, CancellationToken cancellationToken = default)
+    public User? GetById(string id, CancellationToken cancellationToken = default)
     {
-        return _userRepository.GetById(email, cancellationToken);
+        return _userRepository.GetById(id, cancellationToken);
     }
     
     public async Task Create(User user, CancellationToken cancellationToken = default)

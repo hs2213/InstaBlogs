@@ -34,6 +34,9 @@ public partial class CreateBlog : IAsyncDisposable
     
     [Inject]
     private IBlogService BlogService { get; set; } = default!;
+    
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -135,9 +138,12 @@ public partial class CreateBlog : IAsyncDisposable
         if (Id == Guid.Empty)
         {
             await BlogService.Create(_blogBeingEdited);
+            NavigationManager.NavigateTo("profile");
+            return;
         }
 
         await BlogService.Update(_blogBeingEdited);
+        NavigationManager.NavigateTo("profile");
     }
 
     public async ValueTask DisposeAsync()

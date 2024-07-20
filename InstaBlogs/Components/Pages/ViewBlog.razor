@@ -13,7 +13,7 @@
 <div class="blog">
     <h1 class="blog-title">@_displayedBlog?.Title</h1>
     <h2 class="blog-created-time">@_displayedBlog?.Created.ToLocalTime().ToString("dd/MM/yyyy")</h2>
-    <h3 class="blog-email">@_displayedBlog?.UserEmail</h3>
+    <h3 class="blog-email">@_userName</h3>
 
     <div class="blog-content">
         @((MarkupString)_htmlContent)
@@ -28,16 +28,23 @@
                 }
                 else
                 {
-                <textarea @bind="_newComment.Content" placeholder="Enter Comment Here"></textarea>
-                <button @onclick="AddComment">Add Comment</button>
+                    <textarea @bind="_newComment.Content" placeholder="Enter Comment Here"></textarea>
+                    <button @onclick="AddComment">Add Comment</button>
 
-                @foreach (Comment comment in _blogComments)
-                {
-                <div class="comment">
-                    <p class="user">@comment.UserEmail</p>
-                    <p class="content">@comment.Content</p>
-                </div>
-                }
+                    @foreach (CommentStructure comment in _blogComments)
+                    {
+                        <div class="comment">
+                            <div class="user-with-bin">
+                                <p class="user">@comment</p>
+                                @if (_currentUser.Email.Equals(comment.User?.Name, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <button @onclick="() => DeleteComment(comment)">Delete</button>
+                                }
+                            </div>
+                            
+                            <p class="content">@comment.Comment?.Content</p>
+                        </div>
+                    }
                 }
             </div>
         </ChildContent>
@@ -47,7 +54,7 @@
 
     @* <RoleView RoleToDisplay="[Role.Creator]"> *@
     @*     <ChildContent> *@
-            @if (_currentUser.Email.Equals(_displayedBlog?.UserEmail, StringComparison.OrdinalIgnoreCase))
+            @if (_currentUser.Email.Equals(_displayedBlog?.UserId, StringComparison.OrdinalIgnoreCase))
             {
                 <div class="approve-reject">
                     <button @onclick="DeleteBlog" style="width: 9rem">Delete Blog</button>

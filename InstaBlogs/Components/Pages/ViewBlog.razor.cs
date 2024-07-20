@@ -2,6 +2,7 @@
 using InstaBlogs.Entities.Enums;
 using InstaBlogs.Services.Blogs;
 using InstaBlogs.Services.Comments;
+using InstaBlogs.Services.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
@@ -22,15 +23,20 @@ public partial class ViewBlog : ComponentBase
     private ICommentService CommentService { get; set; } = default!;
     
     [Inject]
+    private IUserService UserService { get; set; } = default!;
+    
+    [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
 
-    private List<Comment> _blogComments = [];
+    private List<CommentStructure> _blogComments = [];
     
     private Blog? _displayedBlog;
     
     private User _currentUser = new User();
     
     private Comment _newComment = new Comment();
+    
+    private string _userName = string.Empty;
     
     private string _htmlContent = string.Empty;
     
@@ -53,8 +59,22 @@ public partial class ViewBlog : ComponentBase
         _htmlContent = Markdig.Markdown.ToHtml(_displayedBlog.Content);
         
         ChooseStyle();
+        
+        _userName = UserService.GetById(_displayedBlog.UserId)?.Name ?? string.Empty;
+
+        GetCommentsWithUser();
     }
 
+    private void GetCommentsWithUser()
+    {
+        _blogComments = CommentService.GetCommentsByBlogId(_displayedBlog?.Id ?? Guid.Empty)
+            .Select(comment => new CommentStructure
+            {
+                Comment = comment,
+                User = UserService.GetById(comment.UserId)
+            }).ToList();
+    }
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender == false)
@@ -76,6 +96,15 @@ public partial class ViewBlog : ComponentBase
         
         _newComment.BlogId = _displayedBlog.Id;
         await CommentService.CreateComment(_newComment);
+        
+        _blogComments.Add(new CommentStructure{Comment = _newComment, User = _currentUser});
+    }
+    
+    private async Task DeleteComment(CommentStructure comment)
+    {
+        await CommentService.DeleteComment(comment.Comment!);
+        
+        _blogComments.Remove(comment);
     }
 
     private async Task UpdateBlogStatus(Status statusGiven)
