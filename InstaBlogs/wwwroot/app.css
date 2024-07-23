@@ -86,3 +86,18 @@ article::-webkit-scrollbar-thumb:hover {
     overflow: hidden;
     filter: blur(7px);
 }
+
+.gallery-container > .gallery {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.gallery-container > .gallery .reel {
+    width: 30vw !important;
+    height: 32vh !important;
+}
+
+.gallery-container > .gallery .reel .title {
+    font-size: 1rem;
+}

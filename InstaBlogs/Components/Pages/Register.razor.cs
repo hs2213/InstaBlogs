@@ -36,6 +36,7 @@ public partial class Register
 
     private async Task RegisterUser()
     {
+        Keys.UserKey = Guid.NewGuid().ToString();
         await UserService.Create(_userToRegister);
     }
 

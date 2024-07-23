@@ -34,7 +34,7 @@ public class BlogService : IBlogService
         blog.Id = Guid.NewGuid();
         blog.Created = DateTimeOffset.Now;
 
-        ProtectedBrowserStorageResult<User> userInfo = await _sessionStorage.GetAsync<User>(Constants.UserKey);
+        ProtectedBrowserStorageResult<User> userInfo = await _sessionStorage.GetAsync<User>(Keys.UserKey);
         blog.UserId = userInfo.Value?.Id ?? string.Empty;
         
         ValidationResult validationResult = await _blogValidator.ValidateAsync(blog, cancellationToken);

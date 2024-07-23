@@ -30,7 +30,7 @@ public class CommentService : ICommentService
     {
         comment.Id = Guid.NewGuid();
         
-        ProtectedBrowserStorageResult<User> user = await _sessionStorage.GetAsync<User>(Constants.UserKey);
+        ProtectedBrowserStorageResult<User> user = await _sessionStorage.GetAsync<User>(Keys.UserKey);
         
         comment.UserId = user.Value?.Id ?? string.Empty;
         
@@ -38,6 +38,7 @@ public class CommentService : ICommentService
 
         if (validationResult.IsValid == false)
         {
+            await _notificationService.ShowNotification("Ensure the comment is not empty");
             return;
         }
         

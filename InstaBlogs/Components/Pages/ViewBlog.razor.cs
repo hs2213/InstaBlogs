@@ -82,7 +82,7 @@ public partial class ViewBlog : ComponentBase
             return;
         }
         
-        ProtectedBrowserStorageResult<User> user = await SessionStorage.GetAsync<User>(Constants.UserKey);
+        ProtectedBrowserStorageResult<User> user = await SessionStorage.GetAsync<User>(Keys.UserKey);
         
         _currentUser = user.Value ?? new User();
     }
@@ -139,6 +139,8 @@ public partial class ViewBlog : ComponentBase
         }
         
         await BlogService.Delete(_displayedBlog);
+        
+        NavigationManager.NavigateTo("/");
     }
 
     private void UpdateBlog()

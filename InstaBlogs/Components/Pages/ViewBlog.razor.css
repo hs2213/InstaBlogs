@@ -36,7 +36,7 @@ h1, h2, h3, p {
     justify-content: center;
 }
 
-.approve-reject > button {
+.approve-reject > button, .add-comment > button {
     width: 7rem;
     font-size: 1.2rem;
     border: 2px solid #f0f0f0;
@@ -48,7 +48,61 @@ h1, h2, h3, p {
     font-weight: bold;
 }
 
-.approve-reject > button:hover {
+.approve-reject > button:hover, .add-comment > button:hover {
     background: #f0f0f0;
     color: #000;
+}
+
+.add-comment {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.add-comment > textarea {
+    width: 100%;
+    resize: none;
+    min-height: 15vh;
+    background: transparent;
+    color: #f0f0f0;
+    border: 2px solid #f0f0f0;
+    font-size: 1rem;
+}
+
+.add-comment > button {
+    width: 12rem;
+}
+
+.comments {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.comment {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: .5rem;
+    padding: 1rem;
+    border-bottom: 2px solid #a2c1fd;
+}
+
+.user-with-bin {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-with-bin > .bi-trash-fill {
+    cursor: pointer;
+    transition: .5s;
+}
+
+.user-with-bin > .bi-trash-fill:hover {
+    color: #a2c1fd;
 }

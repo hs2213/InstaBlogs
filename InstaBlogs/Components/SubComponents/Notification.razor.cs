@@ -39,13 +39,13 @@ public partial class Notification
         _message = message;
         _showMessage = true;
 
-        StateHasChanged();
+        await InvokeAsync(StateHasChanged);
         
-        await Task.Delay(1500);
-
+        await Task.Delay(2000);
+        
         _showMessage = false;
         
-        StateHasChanged();
+        await InvokeAsync(StateHasChanged);
     }
 
     public void Dispose()

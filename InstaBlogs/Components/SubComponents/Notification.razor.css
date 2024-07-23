@@ -1,11 +1,14 @@
-.notification {
-    position: absolute;
+﻿.notification {
+    position: fixed;
     bottom: 2rem;
-    padding: 1rem;
+    left: 4rem;
+    padding: 1rem .5rem;
     font-size: 1.2rem;
-    background-color: #89cff0;
+    background-color: #a2c1fd;
+    height: fit-content;
 }
 
 .notification > p {
     color: #121212;
+    margin: 0;
 }

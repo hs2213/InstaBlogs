@@ -1,50 +1,59 @@
 ﻿@page "/create"
 @page "/edit/{Id:guid}"
 
-<Loader @ref="_loader"/>
+<RoleView RoleToDisplay="[Role.Creator]">
+    <ChildContent>
 
-<div class="title-container">
-    <label for="title">Title:</label>
-    <input id="title" type="text" @bind="_blogBeingEdited.Title"/>
-    <i class="bi bi-arrow-clockwise " @onclick="UpdateContent"></i>
-    <label>
-        Enable Comments <input type="checkbox" @bind="@_blogBeingEdited.CommentsEnabled"/>
-    </label>
-    <button @onclick="SaveBlog">Save</button>
-</div>
+        <Loader @ref="_loader"/>
 
-<div class="modifiers">
-    <div @onclick="@(() => ModifyText(ModificationType.Bold))">
-        <i class="bi bi-type-bold"></i>
-    </div>
+        <div class="title-container">
+            <label for="title">Title:</label>
+            <input id="title" type="text" @bind="_blogBeingEdited.Title"/>
+            <i class="bi bi-arrow-clockwise " @onclick="UpdateContent"></i>
+            <label>
+                Enable Comments <input type="checkbox" @bind="@_blogBeingEdited.CommentsEnabled"/>
+            </label>
+            <button @onclick="SaveBlog">Save</button>
+        </div>
+
+        <div class="modifiers">
+            <div @onclick="@(() => ModifyText(ModificationType.Bold))">
+                <i class="bi bi-type-bold"></i>
+            </div>
     
-    <div @onclick="@(() => ModifyText(ModificationType.Italic))">
-        <i class="bi bi-type-italic"></i>
-    </div>
+            <div @onclick="@(() => ModifyText(ModificationType.Italic))">
+                <i class="bi bi-type-italic"></i>
+            </div>
 
-    <div @onclick="@AddLink">
-        <i class="bi bi-link-45deg"></i>
-    </div>
+            <div @onclick="@AddLink">
+                <i class="bi bi-link-45deg"></i>
+            </div>
     
-    <label for="image-input">
-        <i class="bi bi-image-fill"></i>
-    </label>
-    <InputFile style="display: none;" OnChange="UploadImage" id="image-input" accept="image/*"></InputFile>
+            <label for="image-input">
+                <i class="bi bi-image-fill"></i>
+            </label>
+            <InputFile style="display: none;" OnChange="UploadImage" id="image-input" accept="image/*"></InputFile>
 
-    <label for="video-input">
-        <i class="bi bi-camera-video-fill"></i>
-    </label>
-    <InputFile style="display: none;" OnChange="UploadVideo" id="video-input" accept="video/*"></InputFile>
-</div>
+            <label for="video-input">
+                <i class="bi bi-camera-video-fill"></i>
+            </label>
+            <InputFile style="display: none;" OnChange="UploadVideo" id="video-input" accept="video/*"></InputFile>
+        </div>
 
-<div class="page-split">
-    <textarea 
+        <div class="page-split">
+            <textarea 
         @bind="@_typedContent" 
         class="user-text" 
         id="typed-content" 
         @onmouseup="OnMouseUp"></textarea>
     
-    <div class="converted-content" id="converted-content">
-        @((MarkupString)_convertedContent)
-    </div>
-</div>
+            <div class="converted-content" id="converted-content">
+                @((MarkupString)_convertedContent)
+            </div>
+        </div>
+
+    </ChildContent>
+    <WrongRoleContent>
+        <h1>Become a creator to create blogs.</h1>
+    </WrongRoleContent>
+</RoleView>

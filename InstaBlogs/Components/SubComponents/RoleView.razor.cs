@@ -28,7 +28,7 @@ public partial class RoleView
             return;
         }
         
-        ProtectedBrowserStorageResult<User> activeUser = await ProtectedSessionStorage.GetAsync<User>(Constants.UserKey);
+        ProtectedBrowserStorageResult<User> activeUser = await ProtectedSessionStorage.GetAsync<User>(Keys.UserKey);
 
         if (activeUser.Success == false)
         {
@@ -37,6 +37,6 @@ public partial class RoleView
 
         _isContentRestricted = RoleToDisplay.Contains<Role>(activeUser.Value!.Role) == false;
         
-        StateHasChanged();
+        await InvokeAsync(() => StateHasChanged());
     }
 }

@@ -24,7 +24,7 @@ public partial class Profile : ComponentBase
             return;
         }
         
-        ProtectedBrowserStorageResult<User> activeUser = await ProtectedSessionStorage.GetAsync<User>(Constants.UserKey);
+        ProtectedBrowserStorageResult<User> activeUser = await ProtectedSessionStorage.GetAsync<User>(Keys.UserKey);
 
         if (activeUser.Success == false)
         {

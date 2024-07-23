@@ -1,12 +1,7 @@
-﻿@page "/"
-@page "/approve-reject"
-
-@attribute [Authorize]
-
-@if (_blogs.Any())
+﻿@if (_blogs.Any())
 {
     <div class="reel-with-arrows">
-        <Reel OnClicked="OnBlogClicked" BlogToShow="@_blogs[_blogIndex]"/>
+        <Reel OnClicked="OnBlogClicked" BlogToShow="@_blogToShow" @ref="_reel"/>
         <div class="arrows">
             <i class="bi bi-arrow-up-circle-fill" @onclick="OnArrowUpPressed"></i>
             <i class="bi bi-arrow-down-circle-fill" @onclick="OnArrowDownPressed"></i>

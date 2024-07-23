@@ -19,6 +19,28 @@
         @((MarkupString)_htmlContent)
     </div>
 
+    <RoleView RoleToDisplay="[Role.Admin, Role.Creator]">
+        <ChildContent>
+            <div class="approval-area">
+                <div class="current-status" style="@_style">
+                    <p>Current Status: @_displayedBlog?.Status.ToString()</p>
+                </div>
+
+                <RoleView RoleToDisplay="[Role.Admin]">
+                    <ChildContent>
+                        <div class="approve-reject">
+                            <button @onclick="() => UpdateBlogStatus(Status.Approved)">Approve</button>
+                            <button @onclick="() => UpdateBlogStatus(Status.Rejected)">Reject</button>
+                        </div>
+                    </ChildContent>
+                    <WrongRoleContent></WrongRoleContent>
+                </RoleView>
+            </div>
+        </ChildContent>
+
+        <WrongRoleContent></WrongRoleContent>
+    </RoleView>
+
     <RoleView RoleToDisplay="[Role.Creator, Role.Viewer]">
         <ChildContent>
             <div class="comments">
@@ -28,17 +50,21 @@
                 }
                 else
                 {
-                    <textarea @bind="_newComment.Content" placeholder="Enter Comment Here"></textarea>
-                    <button @onclick="AddComment">Add Comment</button>
+                    <div class="add-comment">
+                        <textarea @bind="_newComment.Content" placeholder="Enter Comment Here"></textarea>
+                        <button @onclick="AddComment">Add Comment</button>
+                    </div>
 
+                    <h3 style="text-align: left">Previous Comments:</h3>
+                    
                     @foreach (CommentStructure comment in _blogComments)
                     {
                         <div class="comment">
                             <div class="user-with-bin">
-                                <p class="user">@comment</p>
-                                @if (_currentUser.Email.Equals(comment.User?.Name, StringComparison.OrdinalIgnoreCase))
+                                <p class="user">@comment.User?.Name</p>
+                                @if (_currentUser.Id == comment.User?.Id)
                                 {
-                                    <button @onclick="() => DeleteComment(comment)">Delete</button>
+                                    <i class="bi bi-trash-fill" @onclick="() => DeleteComment(comment)"></i>
                                 }
                             </div>
                             
@@ -52,34 +78,17 @@
         <WrongRoleContent></WrongRoleContent>
     </RoleView>
 
-    @* <RoleView RoleToDisplay="[Role.Creator]"> *@
-    @*     <ChildContent> *@
-            @if (_currentUser.Email.Equals(_displayedBlog?.UserId, StringComparison.OrdinalIgnoreCase))
+    <RoleView RoleToDisplay="[Role.Creator]">
+        <ChildContent>
+            @if (_currentUser.Id == _displayedBlog?.UserId)
             {
                 <div class="approve-reject">
                     <button @onclick="DeleteBlog" style="width: 9rem">Delete Blog</button>
                     <button @onclick="UpdateBlog" style="width: 9rem">Update Blog</button>
                 </div>
             }
-    @*     </ChildContent> *@
-    @*      *@
-    @*     <WrongRoleContent></WrongRoleContent> *@
-    @* </RoleView> *@
-
-    @* <RoleView RoleToDisplay="[Role.Admin]"> *@
-    @*     <ChildContent> *@
-    @*         <div class="approval-area"> *@
-    @*             <div class="current-status" style="@_style"> *@
-    @*                 <p>Current Status: @_displayedBlog?.Status.ToString()</p> *@
-    @*             </div> *@
-    @* *@
-    @*             <div class="approve-reject"> *@
-    @*                 <button @onclick="() => UpdateBlogStatus(Status.Approved)">Approve</button> *@
-    @*                 <button @onclick="() => UpdateBlogStatus(Status.Rejected)">Reject</button> *@
-    @*             </div> *@
-    @*         </div> *@
-    @*     </ChildContent> *@
-    @*      *@
-    @*     <WrongRoleContent></WrongRoleContent> *@
-    @* </RoleView> *@
+        </ChildContent>
+    
+        <WrongRoleContent></WrongRoleContent>
+    </RoleView>
 </div>

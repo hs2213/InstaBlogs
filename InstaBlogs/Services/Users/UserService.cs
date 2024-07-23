@@ -36,7 +36,7 @@ public class UserService : IUserService
 
         if (user != null)
         {
-            await _protectedSessionStorage.SetAsync(Constants.UserKey, user);
+            await _protectedSessionStorage.SetAsync(Keys.UserKey, user);
         }
         
         return user != null;
@@ -59,7 +59,7 @@ public class UserService : IUserService
         
         await _userRepository.Create(user, cancellationToken);
         
-        await _protectedSessionStorage.SetAsync(Constants.UserKey, user);
+        await _protectedSessionStorage.SetAsync(Keys.UserKey, user);
         
         await _notificationService.ShowNotification("Created account successfully");
         

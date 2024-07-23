@@ -4,13 +4,8 @@
     
     <div class="icons">
         <i @onclick="@(() => NavigationManager.NavigateTo("", true))" class="bi bi-house"></i>
-        <i class="bi bi-search"></i>
-        <RoleView RoleToDisplay="[Role.Admin]">
-            <ChildContent>
-                <i class="bi bi-check-all" @onclick="@(() => NavigationManager.NavigateTo("approve-reject", true))"></i>
-            </ChildContent>
-            <WrongRoleContent></WrongRoleContent>
-        </RoleView>
+        <i @onclick="@(() => NavigationManager.NavigateTo("search"))" class="bi bi-search"></i>
+        <i class="bi bi-check-all" @onclick="@(() => NavigationManager.NavigateTo("approve-reject", true))"></i>
         <i @onclick="@(() => NavigationManager.NavigateTo("create"))" class="bi bi-plus-circle"></i>
         <i class="bi bi-person" @onclick="@(() => NavigationManager.NavigateTo("profile"))"></i>
     </div>

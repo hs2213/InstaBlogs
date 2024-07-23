@@ -3,7 +3,7 @@ using InstaBlogs.Entities.Enums;
 using InstaBlogs.Services.Blogs;
 using Microsoft.AspNetCore.Components;
 
-namespace InstaBlogs.Components.Pages;
+namespace InstaBlogs.Components.SubComponents;
 
 public partial class Feed
 {
@@ -14,11 +14,13 @@ public partial class Feed
     private NavigationManager NavigationManager { get; set; } = default!;
     
     private List<Blog> _blogs = new();
+
+    private Blog _blogToShow = new Blog();
+    
+    private Reel _reel = default!;
     
     private int _blogIndex = 0;
     
-    private bool _blogsRendered = false;
-
     protected override void OnInitialized()
     {
         if (NavigationManager.Uri.Contains("approve"))
@@ -28,6 +30,8 @@ public partial class Feed
         }
         
         _blogs = BlogService.GetRandomBlogs(20).ToList();
+        
+        _blogToShow = _blogs[_blogIndex];
     }
 
     private void OnBlogClicked()
@@ -41,6 +45,12 @@ public partial class Feed
         {
             _blogIndex--;
         }
+        
+        _blogToShow = _blogs[_blogIndex];
+        
+        StateHasChanged();
+        
+        _reel.ConvertContent(_blogToShow);
     }
     
     private void OnArrowDownPressed()
@@ -53,6 +63,12 @@ public partial class Feed
         }
         
         _blogIndex++;
+        
+        _blogToShow = _blogs[_blogIndex];
+        
+        StateHasChanged();
+        
+        _reel.ConvertContent(_blogToShow);
     }
 
     private void ShouldReelsBeAdded()

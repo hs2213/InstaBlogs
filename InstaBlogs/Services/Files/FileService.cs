@@ -25,7 +25,7 @@ public class FileService : IFileService
         
         BlobClient client = _container.GetBlobClient(path);
 
-        _ = await client.UploadAsync(file.OpenReadStream(10000000), overwrite: true);
+        _ = await client.UploadAsync(file.OpenReadStream(100000000), overwrite: true);
 
         return $"https://uniblog.blob.core.windows.net/videos/{path}";
     }

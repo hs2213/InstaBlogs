@@ -1,4 +1,6 @@
-
+.page {
+    position: relative;
+}
 
 #blazor-error-ui {
     background: lightyellow;

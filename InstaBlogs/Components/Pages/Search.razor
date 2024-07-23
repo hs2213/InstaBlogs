@@ -1,2 +1,16 @@
 ﻿@page "/search"
 
+<div class="search-bar">
+    <label for="search">Search:</label>
+    <input id="search" type="text" @bind="_searchTerm"/>
+    <i class="bi bi-search" @onclick="SearchBlogs"></i>
+</div>
+
+<div class="gallery-container">
+    <ReelGallery Blogs="_searchResults"/>
+</div>
+
+@if (_noResults)
+{
+    <p>No Results Found</p>
+}

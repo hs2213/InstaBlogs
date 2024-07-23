@@ -20,6 +20,8 @@ public partial class Login
     
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
 
+    private bool _loggedInFirstTime = false;
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender == false)
@@ -32,9 +34,9 @@ public partial class Login
 
     private async Task CheckUserAuthenticatedAndInDb()
     {
-        var result = await ProtectedSessionStorage.GetAsync<User>(Constants.UserKey);
+        var result = await ProtectedSessionStorage.GetAsync<User>(Keys.UserKey);
 
-        if (result.Success)
+        if (result.Success && _loggedInFirstTime)
         {
             return;
         }
@@ -48,6 +50,17 @@ public partial class Login
         }
         
         string? userId = user!.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (result.Success)
+        {
+            if (userId == result.Value?.Id)
+            {
+                _loggedInFirstTime = true;
+                return;
+            }
+        }
+        
+        Keys.UserKey = Guid.NewGuid().ToString();
         
         bool userExists = await UserService.CheckIfExists(userId!);
 
@@ -55,11 +68,13 @@ public partial class Login
         {
             NavigationManager.NavigateTo("register");
         }
+        
+        _loggedInFirstTime = true;
     }
 
     private async Task LogOut()
     {
-        await ProtectedSessionStorage.DeleteAsync(Constants.UserKey);
+        await ProtectedSessionStorage.DeleteAsync(Keys.UserKey);
         
         NavigationManager.NavigateTo("Account/Logout");
     }
